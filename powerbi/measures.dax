@@ -1,0 +1,25 @@
+-- Tabla de hechos: fact_service_snapshot
+Servicios := COUNTROWS ( fact_service_snapshot )
+
+Clientes := DISTINCTCOUNT ( fact_service_snapshot[customer_id] )
+
+Ingreso mensual := SUM ( fact_service_snapshot[monthly_fee] )
+
+Ingreso promedio por cliente := DIVIDE ( [Ingreso mensual], [Clientes] )
+
+Servicios por cliente := DIVIDE ( [Servicios], [Clientes] )
+
+Servicios activos :=
+CALCULATE ( [Servicios], fact_service_snapshot[active] = TRUE () )
+
+Tasa activa := DIVIDE ( [Servicios activos], [Servicios] )
+
+Uso promedio := AVERAGE ( fact_service_snapshot[usage_score] )
+
+Incidentes := SUM ( fact_service_snapshot[incidents] )
+
+Clientes alto riesgo :=
+CALCULATE (
+    DISTINCTCOUNT ( mart_customer_360[customer_id] ),
+    mart_customer_360[risk_level] = "high"
+)
