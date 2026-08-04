@@ -118,7 +118,7 @@ def _write_findings(connection: duckdb.DuckDBPyConnection, path: Path) -> None:
         f"- La muestra contiene **{overview[0]:,} clientes** y "
         f"**USD {overview[1]:,.2f}** de ingreso mensual simulado.\n"
         f"- El promedio es **{overview[2]:.2f} servicios por cliente**.\n"
-        f"- **{overview[3]:,} clientes** cumplen la regla demostrativa de riesgo alto y "
+        f"- **{overview[3]:,} clientes** cumplen la regla sintética de riesgo alto y "
         "serían candidatos a revisión, no a una acción automática.\n"
         f"- **{leading_line[0]}** concentra el mayor ingreso mensual simulado "
         f"(**USD {leading_line[1]:,.2f}**).\n\n"

@@ -94,7 +94,7 @@ Con `--customers 1000 --seed 42`, los resultados vigentes se regeneran en [docs/
 - Snapshot como grano para que ingresos, uso, incidentes y estado tengan una fecha explícita.
 - Semilla configurable para reproducir pruebas y comparaciones.
 - Reglas de calidad duplicadas en Python y SQL para fallar temprano y dejar trazabilidad consultable.
-- Regla de riesgo explicable para demostración analítica; no se etiqueta como machine learning.
+- Regla de riesgo explicable para una implementación analítica reproducible; no se etiqueta como machine learning.
 - CSV como contrato portátil hacia Power BI, sin versionar bases, modelos ni datos generados.
 
 ## Limitaciones

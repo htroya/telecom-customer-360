@@ -14,7 +14,7 @@
 |---|---|---|
 | `plan_key` | entero, PK | Clave sustituta del plan. |
 | `business_line` | texto | Telefonía fija, internet o televisión. |
-| `plan_name` | texto | Nombre demostrativo del plan. |
+| `plan_name` | texto | Nombre sintético del plan. |
 
 ## `dim_date`
 
