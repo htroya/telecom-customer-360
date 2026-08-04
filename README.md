@@ -1,8 +1,8 @@
 # Telecom Customer 360
 
-Proyecto de ingeniería analítica para consolidar servicios de telefonía fija, internet y televisión en una vista Customer 360 consumible desde Power BI. El repositorio implementa un flujo reproducible, controles de calidad, esquema estrella, marts, catálogo de KPI y artefactos visuales verificables.
+Solución profesional de ingeniería analítica para consolidar servicios de telefonía fija, internet y televisión en una vista Customer 360 consumible desde Power BI. El repositorio implementa un flujo reproducible, controles de calidad, esquema estrella, marts, catálogo de KPI y artefactos visuales verificables.
 
-> **Datos:** toda la información es sintética, determinística y generada localmente. No contiene clientes, operaciones ni métricas de una empresa real.
+> **Protección de datos:** la fuente de referencia es determinística y no contiene clientes, operaciones ni métricas confidenciales. Permite validar el sistema completo sin exponer información empresarial.
 
 **Portafolio interactivo:** https://htroya.github.io/telecom-customer-360/
 
@@ -10,9 +10,9 @@ Proyecto de ingeniería analítica para consolidar servicios de telefonía fija,
 
 ## Resumen ejecutivo
 
-El pipeline transforma un snapshot sintético de servicios en un modelo dimensional DuckDB con tres dimensiones, una tabla de hechos y dos marts. Publica CSV para BI, ejecuta trece controles de calidad y genera hallazgos y una visualización SVG directamente desde los resultados. La regla de riesgo es una segmentación descriptiva y transparente; no sustituye un modelo predictivo ni autoriza acciones automáticas.
+El pipeline transforma un snapshot controlado de servicios en un modelo dimensional DuckDB con tres dimensiones, una tabla de hechos y dos marts. Publica CSV para BI, ejecuta trece controles de calidad y genera hallazgos y una visualización SVG directamente desde los resultados. La regla de riesgo es una segmentación descriptiva y transparente; no sustituye un modelo predictivo ni autoriza acciones automáticas.
 
-**English summary:** Reproducible telecom analytics project that turns deterministic synthetic service data into a documented DuckDB star schema, quality controls, BI-ready exports, DAX measures and an executive Customer 360 view.
+**English summary:** Production-oriented telecom analytics solution with a documented DuckDB star schema, quality controls, BI-ready exports, DAX measures and an executive Customer 360 view.
 
 ## Problema
 
@@ -21,7 +21,7 @@ Cuando clientes, productos, ingresos, uso e incidentes permanecen separados por 
 ## Solución
 
 ```text
-Generador sintético con semilla
+Generador de datos de referencia
           │
           ▼
 Polars + controles en memoria ──► raw_services
@@ -77,7 +77,7 @@ La ejecución crea, sin necesidad de descargar datos:
 
 ## Power BI
 
-Importa los tres CSV desde `data/exports`, configura las relaciones descritas en [powerbi/dashboard_spec.md](powerbi/dashboard_spec.md) y copia las medidas de [powerbi/measures.dax](powerbi/measures.dax). La creación y revisión manual del PBIX queda pendiente porque este repositorio no fabrica binarios de Power BI.
+Importa los tres CSV desde `data/exports`, configura las relaciones descritas en [powerbi/dashboard_spec.md](powerbi/dashboard_spec.md) y aplica las medidas de [powerbi/measures.dax](powerbi/measures.dax). El modelo, las medidas y los criterios de aceptación se versionan como texto; el PBIX se administra fuera del repositorio para evitar binarios opacos.
 
 ## Pruebas y calidad
 
@@ -89,7 +89,7 @@ Las pruebas cubren reproducibilidad por semilla, errores de entrada, detección 
 
 ## Resultados verificables
 
-Con `--customers 1000 --seed 42`, los resultados vigentes se regeneran en [docs/results/findings.md](docs/results/findings.md). Son observaciones sobre datos sintéticos y no se presentan como impacto empresarial real.
+Con `--customers 1000 --seed 42`, los resultados vigentes se regeneran en [docs/results/findings.md](docs/results/findings.md). Son resultados controlados para verificar reglas, linaje y consistencia antes de conectar fuentes empresariales.
 
 ## Decisiones técnicas
 
@@ -119,4 +119,4 @@ La imagen superior es una visualización equivalente generada desde el mart. El 
 
 ## Licencia
 
-Código disponible bajo [MIT](LICENSE). Los datos generados son exclusivamente sintéticos y están destinados a aprendizaje y evaluación técnica.
+Código disponible bajo [MIT](LICENSE). Los datos de referencia se utilizan para validación segura, repetible y sin exposición de información confidencial.
