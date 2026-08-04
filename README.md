@@ -1,6 +1,6 @@
 # Telecom Customer 360
 
-Solución profesional de ingeniería analítica para consolidar servicios de telefonía fija, internet y televisión en una vista Customer 360 consumible desde Power BI. El repositorio implementa un flujo reproducible, controles de calidad, esquema estrella, marts, catálogo de KPI y artefactos visuales verificables.
+Sistema de ingeniería analítica para consolidar servicios de telefonía fija, internet y televisión en una vista Customer 360 consumible desde Power BI. Implementa cargas idempotentes, cortes mensuales, dimensión de clientes SCD tipo 2, controles de calidad, esquema estrella, cohortes, movimientos de ingreso, catálogo de KPI y observabilidad de datos.
 
 > **Protección de datos:** la fuente de referencia es determinística y no contiene clientes, operaciones ni métricas confidenciales. Permite validar el sistema completo sin exponer información empresarial.
 
@@ -12,7 +12,7 @@ Solución profesional de ingeniería analítica para consolidar servicios de tel
 
 El pipeline transforma un snapshot controlado de servicios en un modelo dimensional DuckDB con tres dimensiones, una tabla de hechos y dos marts. Publica CSV para BI, ejecuta trece controles de calidad y genera hallazgos y una visualización SVG directamente desde los resultados. La regla de riesgo es una segmentación descriptiva y transparente; no sustituye un modelo predictivo ni autoriza acciones automáticas.
 
-**English summary:** Production-oriented telecom analytics solution with a documented DuckDB star schema, quality controls, BI-ready exports, DAX measures and an executive Customer 360 view.
+**English summary:** Telecom analytics system with idempotent monthly loads, a DuckDB star schema, customer SCD type 2 history, lifecycle and cohort marts, quality controls, BI exports, DAX measures and data observability.
 
 ## Problema
 
@@ -99,19 +99,33 @@ Con `--customers 1000 --seed 42`, los resultados vigentes se regeneran en [docs/
 - Regla de riesgo explicable para una implementación analítica reproducible; no se etiqueta como machine learning.
 - CSV como contrato portátil hacia Power BI, sin versionar bases, modelos ni datos generados.
 
-## Limitaciones
+## Historia, incrementalidad y observabilidad
 
-- Un único corte temporal no permite estudiar tendencia, cohortes o estacionalidad.
-- La fuente sintética simplifica facturación, hogares, productos, bajas y eventos operativos.
-- El umbral de riesgo no ha sido calibrado con resultados reales ni revisión de negocio.
-- No incluye gateway, actualización incremental, RLS, despliegue a Power BI Service ni PBIX.
+`src/advanced_analytics.py` incorpora cortes mensuales configurables y mantiene la identidad servicio-mes. Cada ejecución registra `run_id`, huella del contenido, cantidad de filas y fecha de carga. Repetir un lote idéntico no duplica información; reutilizar su identificador con datos distintos genera un error.
+
+Las tablas añadidas cubren:
+
+- `dim_customer_scd2`: versiones de ciudad y segmento con vigencia e indicador actual.
+- `fact_service_monthly`: ingreso reconocido, uso, incidentes y estado por servicio y mes.
+- `mart_customer_lifecycle`: altas o reactivaciones, expansión, contracción, estabilidad y bajas.
+- `mart_cohort_retention`: población inicial, clientes retenidos y tasa por edad de cohorte.
+- `data_observability_monthly`: volumen, variación mensual e indicador de conciliación.
+
+La [arquitectura histórica](docs/architecture_history.md) describe flujo, granos y contratos. Las nuevas salidas CSV están preparadas para páginas de retención, movimiento de ingresos, calidad y seguimiento de cargas en Power BI.
+
+## Límites de alcance
+
+- La fuente controlada simplifica facturación, hogares, productos, bajas y eventos operativos.
+- El historial valida cambios e incrementalidad, pero no representa un calendario comercial específico.
+- La regla de riesgo requiere calibración y revisión antes de orientar acciones de retención.
+- Gateway, credenciales, RLS y despliegue en Power BI Service dependen del entorno de la organización.
 
 ## Próximos pasos
 
-1. Validar el catálogo de KPI y reglas con dueños de datos.
-2. Incorporar snapshots históricos y dimensiones lentamente cambiantes.
-3. Añadir costos de servicio, campañas y resultados de retención.
-4. Implementar RLS, refresh incremental y monitoreo de actualización en Power BI Service.
+1. Validar catálogo de KPI, vigencias y conciliaciones con responsables de los datos.
+2. Conectar facturación, campañas y resultados de retención mediante contratos versionados.
+3. Configurar RLS, particiones de actualización y alertas de refresco en Power BI Service.
+4. Incorporar pruebas de recuperación, acuerdos de frescura y trazabilidad del origen.
 
 ## Capturas
 
