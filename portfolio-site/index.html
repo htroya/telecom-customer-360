@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Portafolio de Hernán Troya, Analista de Datos y Business Intelligence especializado en Power BI, SQL, ETL/ELT, modelado dimensional y KPI."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_EC" />
+    <meta property="og:site_name" content="Hernán Troya | Datos y BI" />
+    <meta property="og:title" content="Soluciones de Datos y BI | Arquitectura, Analítica y Automatización" />
+    <meta property="og:description" content="Customer 360, integración comercial, riesgo de abandono y analítica serverless en AWS, con arquitectura, código, pruebas y documentación." />
+    <meta property="og:url" content="https://htroya.github.io/telecom-customer-360/" />
+    <meta property="og:image" content="https://htroya.github.io/telecom-customer-360/portfolio-architecture-preview.png?v=20260804d" />
+    <meta property="og:image:secure_url" content="https://htroya.github.io/telecom-customer-360/portfolio-architecture-preview.png?v=20260804d" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="627" />
+    <meta property="og:image:alt" content="Arquitectura analítica del portafolio de datos y BI de Hernán Troya" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Soluciones de Datos y BI | Hernán Troya" />
+    <meta name="twitter:description" content="Customer 360, integración comercial, riesgo de abandono y analítica serverless en AWS." />
+    <meta name="twitter:image" content="https://htroya.github.io/telecom-customer-360/portfolio-architecture-preview.png?v=20260804d" />
+    <link rel="canonical" href="https://htroya.github.io/telecom-customer-360/" />
+    <title>Hernán Troya | Analista de Datos y Business Intelligence</title>
+    <link rel="stylesheet" href="styles.css?v=20260804b" />
+    <script src="app.js?v=20260804d" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#inicio" aria-label="Hernán Troya, inicio">Hernán Troya</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="sr-only">Abrir navegación</span>
+        <span></span><span></span>
+      </button>
+      <nav id="primary-nav" class="primary-nav" aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#experiencia">Experiencia</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
+
+    <main id="contenido">
+      <section id="inicio" class="hero section-shell" aria-labelledby="hero-title">
+        <div class="hero-copy reveal">
+          <h1 id="hero-title">Analítica que convierte sistemas complejos en decisiones confiables<span>.</span></h1>
+          <p class="hero-stack">Power BI <i></i> SQL/PLSQL <i></i> Python <i></i> ETL/ELT <i></i> Modelado dimensional <i></i> KPI</p>
+          <p class="hero-summary">
+            Diseño datos, modelos y controles para que la información llegue al negocio con contexto,
+            trazabilidad y una definición clara de cada indicador.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#proyectos">Explorar proyectos <span aria-hidden="true">→</span></a>
+            <a class="button button-secondary" href="cv.html">Ver CV <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+
+        <figure class="hero-architecture reveal" aria-labelledby="architecture-caption">
+          <svg viewBox="0 0 760 470" role="img" aria-labelledby="hero-diagram-title hero-diagram-desc">
+            <title id="hero-diagram-title">Arquitectura analítica de extremo a extremo</title>
+            <desc id="hero-diagram-desc">Fuentes de datos fluyen por ingesta y controles hacia un modelo dimensional y productos analíticos.</desc>
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head" />
+              </marker>
+            </defs>
+            <g class="diagram-stage">
+              <text x="26" y="28">FUENTES</text>
+              <rect x="18" y="48" width="112" height="244" rx="4" />
+              <g class="diagram-node"><rect x="35" y="72" width="78" height="42" rx="3" /><text x="74" y="98">CRM</text></g>
+              <g class="diagram-node"><rect x="35" y="128" width="78" height="42" rx="3" /><text x="74" y="154">ERP</text></g>
+              <g class="diagram-node"><rect x="35" y="184" width="78" height="42" rx="3" /><text x="74" y="210">APIs</text></g>
+              <g class="diagram-node"><rect x="35" y="240" width="78" height="30" rx="3" /><text x="74" y="260">Archivos</text></g>
+            </g>
+            <g class="diagram-stage">
+              <text x="174" y="28">INGESTA Y CALIDAD</text>
+              <rect x="166" y="48" width="160" height="244" rx="4" />
+              <g class="diagram-node active"><rect x="188" y="83" width="116" height="70" rx="3" /><text x="246" y="114">ETL / ELT</text><text class="sub" x="246" y="134">orquestación</text></g>
+              <g class="diagram-node"><rect x="188" y="184" width="116" height="70" rx="3" /><text x="246" y="214">Validación</text><text class="sub" x="246" y="234">linaje y reglas</text></g>
+            </g>
+            <g class="diagram-stage">
+              <text x="376" y="28">MODELO DIMENSIONAL</text>
+              <rect x="368" y="48" width="224" height="244" rx="4" />
+              <g class="diagram-node"><rect x="449" y="72" width="82" height="44" rx="3" /><text x="490" y="98">Tiempo</text></g>
+              <g class="diagram-node"><rect x="387" y="151" width="82" height="44" rx="3" /><text x="428" y="177">Cliente</text></g>
+              <g class="diagram-node active"><rect x="480" y="139" width="98" height="68" rx="3" /><text x="529" y="169">Tabla de</text><text x="529" y="188">hechos</text></g>
+              <g class="diagram-node"><rect x="387" y="225" width="82" height="44" rx="3" /><text x="428" y="251">Canal</text></g>
+              <g class="diagram-node"><rect x="496" y="225" width="82" height="44" rx="3" /><text x="537" y="251">Producto</text></g>
+              <path d="M490 116V138 M469 173H479 M469 247L503 207 M537 225V208" />
+            </g>
+            <g class="diagram-stage">
+              <text x="626" y="28">DECISIONES</text>
+              <rect x="618" y="48" width="124" height="244" rx="4" />
+              <g class="diagram-node active"><rect x="638" y="78" width="84" height="50" rx="3" /><text x="680" y="108">Power BI</text></g>
+              <g class="diagram-node"><rect x="638" y="150" width="84" height="50" rx="3" /><text x="680" y="180">KPI</text></g>
+              <g class="diagram-node"><rect x="638" y="222" width="84" height="50" rx="3" /><text x="680" y="252">Hallazgos</text></g>
+            </g>
+            <g class="diagram-flow">
+              <path d="M130 170H166" marker-end="url(#arrow)" />
+              <path d="M326 170H368" marker-end="url(#arrow)" />
+              <path d="M592 170H618" marker-end="url(#arrow)" />
+            </g>
+            <g class="governance">
+              <rect x="166" y="334" width="576" height="88" rx="4" />
+              <text x="190" y="364">GOBIERNO Y TRAZABILIDAD</text>
+              <path d="M190 383H718" />
+              <text class="sub" x="190" y="405">Diccionario de datos</text>
+              <text class="sub" x="365" y="405">Calidad</text>
+              <text class="sub" x="470" y="405">Linaje</text>
+              <text class="sub" x="560" y="405">Seguridad</text>
+              <text class="sub" x="664" y="405">Pruebas</text>
+            </g>
+          </svg>
+          <figcaption id="architecture-caption">Un flujo analítico completo: fuentes, calidad, modelo, consumo y gobierno.</figcaption>
+        </figure>
+      </section>
+
+      <section class="project-intro section-shell" aria-labelledby="projects-title">
+        <div>
+          <span class="section-number" aria-hidden="true">01—04</span>
+          <h2 id="projects-title">Cuatro proyectos, una práctica analítica completa.</h2>
+        </div>
+        <p>Desde integración y modelado hasta evaluación, visualización, seguridad y operación. Cada repositorio documenta decisiones, pruebas, límites y criterios de ejecución.</p>
+      </section>
+
+      <section id="proyectos" class="projects" aria-label="Proyectos destacados">
+        <article id="telecom" class="project project-telecom" data-project>
+          <div class="project-index"><span>01</span><span>Telecom Customer 360</span></div>
+          <div class="project-copy">
+            <h3>Telecom Customer 360</h3>
+            <p class="project-tech">Modelo dimensional · KPI · Calidad de datos · Power BI</p>
+            <dl>
+              <div><dt>Problema</dt><dd>Telefonía fija, internet y televisión analizados en silos operativos.</dd></div>
+              <div><dt>Solución</dt><dd>Customer 360 gobernado con modelo estrella, catálogo de KPI, SQL, medidas DAX y especificación de dashboard.</dd></div>
+              <div><dt>Validación</dt><dd>Generación determinista, controles de calidad y pruebas automatizadas sobre las reglas documentadas.</dd></div>
+            </dl>
+            <div class="project-links">
+              <a href="https://github.com/htroya/telecom-customer-360">Abrir repositorio <span aria-hidden="true">↗</span></a>
+              <button type="button" data-detail-toggle aria-expanded="false">Ver decisiones técnicas <span aria-hidden="true">+</span></button>
+            </div>
+            <div class="technical-detail" hidden>
+              <p>Grano declarado, dimensiones conformadas, reglas de calidad, trazabilidad del KPI y separación entre datos de referencia y experiencia sectorial.</p>
+            </div>
+          </div>
+          <figure class="project-visual star-visual" aria-label="Modelo estrella de Telecom Customer 360">
+            <div class="visual-label">MODELO DIMENSIONAL</div>
+            <div class="star-grid">
+              <span class="node">DimTiempo</span><span></span><span class="node">DimCliente</span>
+              <span class="node">DimCanal</span><strong class="node fact">FactServicio</strong><span class="node">DimProducto</span>
+              <span class="node">DimPlan</span><span></span><span class="node">DimGeografía</span>
+            </div>
+            <div class="visual-footer"><span>Datos trazables</span><span>SQL + DAX</span><span>Pruebas</span></div>
+          </figure>
+        </article>
+
+        <article id="retail" class="project project-retail" data-project>
+          <div class="project-index"><span>02</span><span>Retail ELT</span></div>
+          <div class="project-copy">
+            <h3>Retail ELT</h3>
+            <p class="project-tech">Polars · DuckDB · Parquet · SQL · DAX</p>
+            <dl>
+              <div><dt>Problema</dt><dd>Actualización manual de ventas, margen y KPI sin un linaje verificable.</dd></div>
+              <div><dt>Solución</dt><dd>Flujo ELT local, datos columnares, marts dimensionales y salida preparada para Power BI.</dd></div>
+              <div><dt>Validación</dt><dd>Benchmark documentado, contratos de datos y pruebas de calidad ejecutables.</dd></div>
+            </dl>
+            <div class="project-links">
+              <a href="https://github.com/htroya/retail-elt-polars-duckdb">Abrir repositorio <span aria-hidden="true">↗</span></a>
+              <button type="button" data-detail-toggle aria-expanded="false">Ver decisiones técnicas <span aria-hidden="true">+</span></button>
+            </div>
+            <div class="technical-detail" hidden><p>Capas raw, curated y marts; formatos columnares; consultas de negocio; conjunto de consumo; catálogo de KPI y benchmark con contexto técnico.</p></div>
+          </div>
+          <figure class="project-visual pipeline-visual" aria-label="Linaje del proyecto Retail ELT">
+            <div class="visual-label">LINAJE ELT</div>
+            <ol class="pipeline">
+              <li><span>01</span><strong>CSV controlado</strong><small>fuente</small></li>
+              <li><span>02</span><strong>Polars</strong><small>calidad</small></li>
+              <li><span>03</span><strong>Parquet</strong><small>curado</small></li>
+              <li><span>04</span><strong>DuckDB</strong><small>marts SQL</small></li>
+              <li><span>05</span><strong>Power BI</strong><small>consumo</small></li>
+            </ol>
+            <div class="visual-footer"><span>Contratos</span><span>Benchmark</span><span>KPI</span></div>
+          </figure>
+        </article>
+
+        <article id="churn" class="project project-churn" data-project>
+          <div class="project-index"><span>03</span><span>Churn Risk</span></div>
+          <div class="project-copy">
+            <h3>Churn Risk</h3>
+            <p class="project-tech">scikit-learn · Evaluación · Umbral de decisión</p>
+            <dl>
+              <div><dt>Problema</dt><dd>Riesgo de baja sin una priorización analítica clara para acciones de retención.</dd></div>
+              <div><dt>Solución</dt><dd>Baseline, pipeline de entrenamiento y evaluación, selección de umbral e interpretación comercial.</dd></div>
+              <div><dt>Validación</dt><dd>Separación de entrenamiento y prueba, matriz de confusión, curvas, métricas e importancia de variables.</dd></div>
+            </dl>
+            <div class="project-links">
+              <a href="https://github.com/htroya/churn-risk-scikit-learn">Abrir repositorio <span aria-hidden="true">↗</span></a>
+              <button type="button" data-detail-toggle aria-expanded="false">Ver decisiones técnicas <span aria-hidden="true">+</span></button>
+            </div>
+            <div class="technical-detail" hidden><p>El umbral se trata como una decisión de negocio: hace explícito el equilibrio entre detectar clientes en riesgo y concentrar el esfuerzo de retención.</p></div>
+          </div>
+          <figure class="project-visual model-visual" aria-label="Flujo de evaluación de Churn Risk">
+            <div class="visual-label">EVALUACIÓN DEL MODELO</div>
+            <div class="model-flow">
+              <div><span>Datos</span><small>históricos controlados</small></div><i></i>
+              <div><span>Features</span><small>pipeline</small></div><i></i>
+              <div><span>Modelo</span><small>baseline + candidato</small></div><i></i>
+              <div class="active"><span>Umbral</span><small>decisión</small></div><i></i>
+              <div><span>Acción</span><small>priorización</small></div>
+            </div>
+            <div class="metric-axis" aria-label="Métricas evaluadas"><span>Recall</span><span>Precision</span><span>F1</span><span>ROC-AUC</span></div>
+            <div class="visual-footer"><span>Sin fuga</span><span>Curvas</span><span>Interpretación</span></div>
+          </figure>
+        </article>
+
+        <article id="aws" class="project project-aws" data-project>
+          <div class="project-index"><span>04</span><span>AWS Data Platform</span></div>
+          <div class="project-copy">
+            <h3>AWS Serverless Data Platform</h3>
+            <p class="project-tech">S3 · Glue · Athena · Terraform · Observabilidad</p>
+            <dl>
+              <div><dt>Problema</dt><dd>Una plataforma analítica necesita ser repetible, auditable y operable desde su definición.</dd></div>
+              <div><dt>Solución</dt><dd>Arquitectura serverless como código, capas de datos, catálogo, consulta, cifrado y monitoreo.</dd></div>
+              <div><dt>Validación</dt><dd>Validación estática, pruebas de componentes, controles de seguridad y pipeline CI documentado.</dd></div>
+            </dl>
+            <div class="project-links">
+              <a href="https://github.com/htroya/aws-serverless-data-platform">Abrir repositorio <span aria-hidden="true">↗</span></a>
+              <button type="button" data-detail-toggle aria-expanded="false">Ver decisiones técnicas <span aria-hidden="true">+</span></button>
+            </div>
+            <div class="technical-detail" hidden><p>Separación por capas, cifrado con KMS, mínimo privilegio, retención y observabilidad como decisiones de arquitectura; despliegue real sujeto a cuenta y costos AWS.</p></div>
+          </div>
+          <figure class="project-visual cloud-visual" aria-label="Arquitectura de AWS Serverless Data Platform">
+            <div class="visual-label">ARQUITECTURA SERVERLESS</div>
+            <div class="cloud-boundary">
+              <div class="cloud-flow">
+                <span>S3<br /><small>landing</small></span><i></i><span>Glue<br /><small>catálogo + ETL</small></span><i></i><span>S3<br /><small>curated</small></span><i></i><span>Athena<br /><small>consulta</small></span>
+              </div>
+              <div class="cloud-controls"><span>KMS</span><span>IAM</span><span>CloudWatch</span><span>Terraform</span></div>
+            </div>
+            <div class="visual-footer"><span>Seguridad</span><span>Observabilidad</span><span>IaC</span></div>
+          </figure>
+        </article>
+      </section>
+
+      <section id="experiencia" class="experience section-shell" aria-labelledby="experience-title">
+        <header class="section-heading reveal">
+          <span class="section-number" aria-hidden="true">05</span>
+          <h2 id="experience-title">Experiencia que conecta datos y contexto de negocio.</h2>
+          <p>Telecomunicaciones, sector público, auditoría, integración de sistemas y procesos notariales aportan el contexto para diseñar análisis que puedan explicarse y sostenerse.</p>
+        </header>
+        <div class="experience-rail" role="list">
+          <article role="listitem"><span class="rail-dot"></span><h3>Telecomunicaciones</h3><p>Data warehouse e integración de CRM, BSS, OSS, facturación, recaudación, servicios y demanda.</p></article>
+          <article role="listitem"><span class="rail-dot"></span><h3>Seis dominios institucionales</h3><p>Centralización mediante Power BI y Qlik Sense, con ETL, modelos y controles de calidad.</p></article>
+          <article role="listitem"><span class="rail-dot"></span><h3>Analítica de riesgos</h3><p>Preparación de datos, reglas de negocio, alertas y evidencia trazable, sin exponer información confidencial.</p></article>
+          <article role="listitem"><span class="rail-dot"></span><h3>Auditoría y evidencia</h3><p>Correlación de accesos, tickets, activos y evidencias para matrices de hallazgos y riesgos.</p></article>
+        </div>
+      </section>
+
+      <section class="capabilities section-shell" aria-labelledby="capabilities-title">
+        <div class="capabilities-copy">
+          <span class="section-number" aria-hidden="true">06</span>
+          <h2 id="capabilities-title">Capacidades integradas de extremo a extremo.</h2>
+        </div>
+        <div class="capability-list">
+          <div><strong>Power BI</strong><span>Modelo, DAX, KPI, servicio y narrativa ejecutiva.</span></div>
+          <div><strong>SQL / PLSQL</strong><span>Transformación, marts, validación y consulta.</span></div>
+          <div><strong>Python</strong><span>Automatización, calidad y modelado analítico.</span></div>
+          <div><strong>ETL / ELT</strong><span>Integración con linaje, controles y contratos.</span></div>
+          <div><strong>Modelado dimensional</strong><span>Grano, hechos, dimensiones y métricas consistentes.</span></div>
+          <div><strong>KPI</strong><span>Definición, trazabilidad y uso para decisiones.</span></div>
+        </div>
+        <aside class="education" aria-labelledby="education-title">
+          <h3 id="education-title">Formación continua</h3>
+          <ul>
+            <li>Maestría en Ciencia de Datos y Máquinas de Aprendizaje <span>En curso</span></li>
+            <li>Magíster en Ciberseguridad <span>2025</span></li>
+            <li>Magíster en Auditoría, Riesgo de Fraude y Auditoría Forense <span>2025</span></li>
+            <li>Diplomado en Power BI <span>180 horas</span></li>
+            <li>AWS SAA-C03 <span>En preparación</span></li>
+          </ul>
+        </aside>
+      </section>
+
+      <section id="contacto" class="contact section-shell" aria-labelledby="contact-title">
+        <h2 id="contact-title">Hablemos de analítica.</h2>
+        <div class="contact-links">
+          <a href="https://www.linkedin.com/in/hernan-t-210436142/">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/htroya">GitHub <span aria-hidden="true">↗</span></a>
+          <a href="mailto:Hernan.troya@yahoo.com">Correo <span aria-hidden="true">↗</span></a>
+          <a href="CV_Hernan_Troya_Analista_Datos_ATS_2026.pdf">Descargar CV <span aria-hidden="true">↓</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Hernán Troya · Analista de Datos y Business Intelligence</p>
+      <a href="#inicio">Volver arriba <span aria-hidden="true">↑</span></a>
+    </footer>
+  </body>
+</html>
