@@ -10,7 +10,7 @@ Importar `service_snapshot.csv`, `customer_360.csv` y `business_line_kpi.csv`. P
 - Barras horizontales: ingreso y tasa activa por línea de negocio.
 - Matriz: segmento × línea con ingreso, servicios, uso e incidentes.
 - Segmentadores: fecha, ciudad, segmento y línea.
-- Nota visible: “Datos sintéticos; resultados de referencia reproducibles”.
+- Nota visible: “Datos de referencia; resultados sujetos a los controles documentados”.
 
 ## Página 2 — Customer 360
 

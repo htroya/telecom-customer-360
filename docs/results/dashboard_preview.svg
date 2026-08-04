@@ -11,5 +11,5 @@
   <text x="70" y="85" class="title">Customer 360 · vista ejecutiva</text>
   <text x="70" y="117" class="subtitle">Ingreso mensual y tasa de servicios activos por línea</text>
   <text x="70" y="185" class="label">Internet</text><rect x="250" y="163" width="430" height="28" rx="6" fill="#246BFD"/><text x="695" y="185" class="value">USD 29,588 · 94.3% activos</text><text x="70" y="260" class="label">Television</text><rect x="250" y="238" width="352" height="28" rx="6" fill="#246BFD"/><text x="617" y="260" class="value">USD 24,252 · 96.5% activos</text><text x="70" y="335" class="label">Telefonia Fija</text><rect x="250" y="313" width="280" height="28" rx="6" fill="#246BFD"/><text x="545" y="335" class="value">USD 19,314 · 96.0% activos</text>
-  <text x="70" y="430" class="note">Vista equivalente generada desde datos sintéticos reproducibles. No es una captura de Power BI.</text>
+  <text x="70" y="430" class="note">Vista equivalente generada desde datos de referencia. No es una captura de Power BI.</text>
 </svg>

@@ -112,7 +112,7 @@ def _write_findings(connection: duckdb.DuckDBPyConnection, path: Path) -> None:
     ).fetchone()
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        "# Hallazgos reproducibles\n\n"
+        "# Hallazgos verificables\n\n"
         "> Todos los valores proceden del dataset sintético generado por este repositorio; "
         "no representan clientes ni resultados de una empresa real.\n\n"
         f"- La muestra contiene **{overview[0]:,} clientes** y "
@@ -161,7 +161,7 @@ def _write_dashboard_svg(connection: duckdb.DuckDBPyConnection, path: Path) -> N
   <text x="70" y="85" class="title">Customer 360 · vista ejecutiva</text>
   <text x="70" y="117" class="subtitle">Ingreso mensual y tasa de servicios activos por línea</text>
   {''.join(bars)}
-  <text x="70" y="430" class="note">Vista equivalente generada desde datos sintéticos reproducibles. No es una captura de Power BI.</text>
+  <text x="70" y="430" class="note">Vista equivalente generada desde datos de referencia. No es una captura de Power BI.</text>
 </svg>
 """
     path.parent.mkdir(parents=True, exist_ok=True)

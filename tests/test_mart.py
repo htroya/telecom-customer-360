@@ -7,7 +7,7 @@ import pytest
 from src.build_mart import build, evaluate_quality, generate_services
 
 
-def test_synthetic_dataset_is_reproducible() -> None:
+def test_synthetic_dataset_is_deterministic() -> None:
     first = generate_services(customers=50, seed=7)
     second = generate_services(customers=50, seed=7)
     assert first.equals(second)

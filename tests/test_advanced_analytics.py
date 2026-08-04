@@ -6,7 +6,7 @@ import pytest
 from src.advanced_analytics import build_advanced_marts, evaluate_history_quality, generate_history
 
 
-def test_history_is_reproducible_and_has_complete_months() -> None:
+def test_history_is_deterministic_and_has_complete_months() -> None:
     first = generate_history(customers=80, months=8, seed=17)
     second = generate_history(customers=80, months=8, seed=17)
     assert first.equals(second)
@@ -57,4 +57,3 @@ def test_advanced_marts_include_scd2_cohorts_and_idempotency(tmp_path: Path) -> 
         "mart_cohort_retention",
         "data_observability_monthly",
     } <= tables
-

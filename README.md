@@ -1,57 +1,107 @@
 # Telecom Customer 360
 
-Sistema de ingeniería analítica para consolidar servicios de telefonía fija, internet y televisión en una vista Customer 360 consumible desde Power BI. Implementa cargas idempotentes, cortes mensuales, dimensión de clientes SCD tipo 2, controles de calidad, esquema estrella, cohortes, movimientos de ingreso, catálogo de KPI y observabilidad de datos.
+Plataforma analítica para consolidar telefonía fija, internet y televisión en una vista única de cliente. El repositorio contiene la carga mensual, el historial SCD tipo 2, el modelo dimensional en DuckDB, los controles de calidad, los marts de ciclo de vida y cohortes, las consultas SQL y el contrato de consumo para Power BI.
 
-> **Protección de datos:** la fuente de referencia es determinística y no contiene clientes, operaciones ni métricas confidenciales. Permite validar el sistema completo sin exponer información empresarial.
+> **Tratamiento de datos:** las fuentes incluidas son deterministas y no contienen clientes, operaciones ni métricas confidenciales. Sirven para ejecutar todos los controles y revisar el comportamiento del sistema antes de conectar orígenes corporativos.
 
-**Portafolio interactivo:** https://htroya.github.io/telecom-customer-360/
+**Sitio del portafolio:** https://htroya.github.io/telecom-customer-360/
 
-![Vista ejecutiva equivalente](docs/results/dashboard_preview.svg)
+![Vista ejecutiva construida desde los resultados](docs/results/dashboard_preview.svg)
 
-## Resumen ejecutivo
+## Qué resuelve
 
-El pipeline transforma un snapshot controlado de servicios en un modelo dimensional DuckDB con tres dimensiones, una tabla de hechos y dos marts. Publica CSV para BI, ejecuta trece controles de calidad y genera hallazgos y una visualización SVG directamente desde los resultados. La regla de riesgo es una segmentación descriptiva y transparente; no sustituye un modelo predictivo ni autoriza acciones automáticas.
+En una operación de telecomunicaciones, la información de cliente, plan, ingreso, uso, incidentes y estado suele quedar separada por línea de negocio. Esa fragmentación impide responder con una definición común preguntas básicas: qué servicios tiene cada cliente, cómo cambia el ingreso mensual, qué cohortes permanecen activas y dónde se deteriora la calidad del servicio.
 
-**English summary:** Telecom analytics system with idempotent monthly loads, a DuckDB star schema, customer SCD type 2 history, lifecycle and cohort marts, quality controls, BI exports, DAX measures and data observability.
+Esta solución reúne esos procesos sin borrar su historia. Cada corte mensual conserva el grano servicio-mes, mantiene las versiones del cliente y publica salidas que pueden auditarse desde el dato de origen hasta la medida del tablero.
 
-## Problema
+## Capacidades implementadas
 
-Cuando clientes, productos, ingresos, uso e incidentes permanecen separados por línea de negocio, resulta difícil conocer la relación completa, priorizar revisiones de servicio y comparar el desempeño del portafolio con definiciones consistentes.
+| Capacidad | Implementación | Evidencia en el repositorio |
+|---|---|---|
+| Vista Customer 360 | Consolidación de servicios, líneas activas, ingreso, uso e incidentes por cliente | `mart_customer_360` y [`sql/customer_360.sql`](sql/customer_360.sql) |
+| Modelo dimensional | Dimensiones de cliente, plan y fecha; hecho por servicio y corte | [`docs/model.md`](docs/model.md) y [`docs/data_dictionary.md`](docs/data_dictionary.md) |
+| Historia de clientes | SCD tipo 2 con vigencia, versión e indicador de fila actual | `dim_customer_scd2` en [`src/advanced_analytics.py`](src/advanced_analytics.py) |
+| Carga idempotente | Registro de lote, huella SHA-256 y rechazo de un `run_id` reutilizado con otro contenido | `ingestion_run` y pruebas de repetición segura |
+| Ciclo de vida | Altas, reactivaciones, expansión, contracción, estabilidad y bajas | `mart_customer_lifecycle` |
+| Retención por cohorte | Población inicial, clientes retenidos y tasa por edad de cohorte | `mart_cohort_retention` |
+| Observabilidad | Volumen mensual, variación y conciliación de ingreso | `data_observability_monthly` |
+| Consumo BI | CSV versionables, catálogo KPI, consultas y medidas DAX | [`powerbi/dashboard_spec.md`](powerbi/dashboard_spec.md) y [`powerbi/measures.dax`](powerbi/measures.dax) |
+| Verificación automática | Integridad, reglas de entrada, historia, lotes y artefactos | [`tests/`](tests) y GitHub Actions |
 
-## Solución
+## Arquitectura
 
 ```text
-Generador de datos de referencia
-          │
-          ▼
-Polars + controles en memoria ──► raw_services
-                                      │
-                                      ▼
-                         DuckDB / esquema estrella
-                                      │
-                     ┌────────────────┴──────────────┐
-                     ▼                               ▼
-              Customer 360                  KPI por línea
-                     └──────── CSV + DAX + diseño BI ────────┘
+Fuentes de clientes, planes, servicios, uso e incidentes
+                           │
+                           ▼
+              Polars: tipado y calidad temprana
+                           │
+            ┌──────────────┴──────────────┐
+            ▼                             ▼
+      snapshot vigente              historia mensual
+            │                             │
+            ▼                             ▼
+   DuckDB / esquema estrella   SCD2 + hecho servicio-mes
+            │                             │
+            └──────────────┬──────────────┘
+                           ▼
+      Customer 360 · ciclo de vida · cohortes · KPI
+                           │
+               ┌───────────┴───────────┐
+               ▼                       ▼
+         CSV y consultas          Power BI / DAX
 ```
 
-La arquitectura y las relaciones se detallan en [docs/model.md](docs/model.md).
+La [arquitectura histórica](docs/architecture_history.md) explica el flujo incremental, los contratos entre capas y las decisiones de modelado.
 
-## Tecnologías
+## Granos y relaciones
 
-- Python 3.11+, Polars y PyArrow para generación y validación.
-- DuckDB y SQL para dimensiones, hechos, marts y controles referenciales.
-- Pytest para pruebas funcionales y de calidad.
-- Power BI como destino de consumo; DAX y diseño están versionados sin fabricar un PBIX.
-- GitHub Actions para validación en cada `push` o `pull_request`.
+No se mezclan procesos con granos distintos:
 
-## Modelo de datos
+| Objeto | Grano | Uso principal |
+|---|---|---|
+| `raw_services` | un servicio en el corte recibido | trazabilidad de entrada |
+| `fact_service_snapshot` | un servicio contratado por fecha de corte | ingreso, uso, incidentes y estado |
+| `fact_service_monthly` | un servicio por mes | movimientos e historia |
+| `dim_customer_scd2` | una versión de cliente por período de vigencia | cambios de ciudad y segmento |
+| `mart_customer_360` | un cliente en el corte | lectura transversal de cartera |
+| `mart_business_line_kpi` | línea de negocio en el corte | comparación de telefonía, internet y TV |
+| `mart_customer_lifecycle` | cliente por mes | clasificación de movimientos de ingreso |
+| `mart_cohort_retention` | cohorte por edad en meses | permanencia de clientes |
 
-El grano de `fact_service_snapshot` es **un servicio contratado por fecha de corte**. Se relaciona con `dim_customer`, `dim_service_plan` y `dim_date`. Consulta el [diccionario de datos](docs/data_dictionary.md), el [catálogo de KPI](docs/kpi_catalog.md) y las [consultas analíticas](sql/analysis_queries.sql).
+Las claves y definiciones de columna se mantienen en el [diccionario de datos](docs/data_dictionary.md). Las medidas de negocio están centralizadas en el [catálogo KPI](docs/kpi_catalog.md).
 
-## Ejecución
+## Flujo de carga
 
-Windows PowerShell:
+1. Genera o recibe servicios tipados con identificadores estables.
+2. Valida nulos, duplicados, dominios, rangos, fechas y coherencia económica.
+3. Materializa el snapshot y sus dimensiones en DuckDB.
+4. Registra cada lote mediante `run_id`, huella del contenido y cantidad de filas.
+5. Construye la historia mensual y deriva las versiones SCD2.
+6. Clasifica movimientos de ingreso y calcula retención por cohorte.
+7. Ejecuta controles SQL de integridad y conciliación.
+8. Publica tablas de consumo, resultados y especificaciones del modelo BI.
+
+Si el mismo lote llega de nuevo con igual contenido, la carga no duplica filas. Si el identificador ya existe con una huella distinta, el proceso se detiene para evitar una sustitución silenciosa.
+
+## Controles de calidad
+
+El sistema falla antes de publicar si encuentra condiciones que comprometen las métricas. Entre los controles cubiertos están:
+
+- identificadores obligatorios vacíos o duplicados;
+- líneas de negocio, estados y planes fuera del dominio previsto;
+- ingresos o consumos incompatibles con la regla de negocio;
+- servicios sin correspondencia en dimensiones;
+- ventanas SCD2 superpuestas o sin una única versión vigente;
+- meses incompletos en la historia recibida;
+- diferencias entre el detalle y los totales agregados;
+- reutilización conflictiva de un identificador de lote.
+
+`data_quality_results` conserva el resultado de los controles SQL dentro de la misma base analítica. `data_observability_monthly` permite revisar cambios de volumen y conciliaciones entre períodos.
+
+## Ejecución local
+
+Requiere Python 3.11 o posterior.
 
 ```powershell
 python -m venv .venv
@@ -59,7 +109,7 @@ python -m venv .venv
 .venv\Scripts\python -m src.build_mart --customers 1000 --seed 42
 ```
 
-Linux/macOS:
+En Linux o macOS:
 
 ```bash
 python -m venv .venv
@@ -67,70 +117,110 @@ python -m venv .venv
 .venv/bin/python -m src.build_mart --customers 1000 --seed 42
 ```
 
-La ejecución crea, sin necesidad de descargar datos:
+La carga principal admite rutas independientes para base, exportaciones y reportes:
 
-- `data/telecom.duckdb`.
-- `data/exports/customer_360.csv`.
-- `data/exports/business_line_kpi.csv`.
-- `data/exports/service_snapshot.csv`.
-- `docs/results/findings.md` y `docs/results/dashboard_preview.svg`.
+```powershell
+.venv\Scripts\python -m src.build_mart `
+  --database data/telecom.duckdb `
+  --exports data/exports `
+  --reports docs/results `
+  --customers 1000 `
+  --seed 42
+```
+
+## Salidas
+
+| Salida | Contenido |
+|---|---|
+| `data/telecom.duckdb` | dimensiones, hechos, marts y resultados de calidad |
+| `data/exports/customer_360.csv` | vista consolidada para análisis de cartera |
+| `data/exports/business_line_kpi.csv` | indicadores por línea de negocio |
+| `data/exports/service_snapshot.csv` | detalle trazable del corte |
+| `customer_lifecycle.csv` | movimientos mensuales del cliente |
+| `cohort_retention.csv` | retención por cohorte y edad |
+| `data_observability_monthly.csv` | controles operativos por período |
+| [`docs/results/findings.md`](docs/results/findings.md) | lectura ejecutiva de los resultados |
+| [`docs/results/dashboard_preview.svg`](docs/results/dashboard_preview.svg) | vista generada desde el mart |
+
+Las salidas derivadas pueden regenerarse; no se versionan bases locales ni archivos temporales.
 
 ## Power BI
 
-Importa los tres CSV desde `data/exports`, configura las relaciones descritas en [powerbi/dashboard_spec.md](powerbi/dashboard_spec.md) y aplica las medidas de [powerbi/measures.dax](powerbi/measures.dax). El modelo, las medidas y los criterios de aceptación se versionan como texto; el PBIX se administra fuera del repositorio para evitar binarios opacos.
+La integración con Power BI no depende de un PBIX opaco dentro del repositorio. El contrato queda descrito como texto revisable:
 
-## Pruebas y calidad
+- [`powerbi/dashboard_spec.md`](powerbi/dashboard_spec.md): páginas, relaciones, filtros, navegación y criterios de aceptación;
+- [`powerbi/measures.dax`](powerbi/measures.dax): medidas de clientes, servicios, ingreso, variación y calidad;
+- [`sql/analysis_queries.sql`](sql/analysis_queries.sql): consultas de contraste para validar el tablero;
+- [`docs/kpi_catalog.md`](docs/kpi_catalog.md): definición, grano, fórmula y precauciones de lectura.
+
+Antes de publicar en Power BI Service deben definirse gateway, credenciales, actualización incremental, RLS, propietarios y alertas de refresco según el entorno de destino.
+
+## Pruebas y CI
 
 ```powershell
 .venv\Scripts\python -m pytest -q
 ```
 
-Las pruebas cubren reproducibilidad por semilla, errores de entrada, detección de valores inválidos, esquema estrella, integridad referencial, exportaciones, controles SQL y generación de reportes. `data_quality_results` permite auditar los controles dentro de DuckDB.
+La matriz automatizada comprueba:
 
-## Resultados verificables
+- validación de parámetros y dominios;
+- construcción completa del esquema estrella;
+- integridad referencial entre hechos y dimensiones;
+- conciliación de filas e ingreso;
+- presencia y contenido de exportaciones y reportes;
+- historia mensual sin huecos ni ventanas inválidas;
+- idempotencia por `run_id` y detección de conflicto;
+- SCD2 con una sola versión actual;
+- cohortes y movimientos bajo escenarios conocidos.
 
-Con `--customers 1000 --seed 42`, los resultados vigentes se regeneran en [docs/results/findings.md](docs/results/findings.md). Son resultados controlados para verificar reglas, linaje y consistencia antes de conectar fuentes empresariales.
+El flujo de GitHub Actions ejecuta las pruebas ante cambios en la rama o en una solicitud de integración.
 
-## Decisiones técnicas
+## Operación y diagnóstico
 
-- Snapshot como grano para que ingresos, uso, incidentes y estado tengan una fecha explícita.
-- Semilla configurable para reproducir pruebas y comparaciones.
-- Reglas de calidad duplicadas en Python y SQL para fallar temprano y dejar trazabilidad consultable.
-- Regla de riesgo explicable para una implementación analítica reproducible; no se etiqueta como machine learning.
-- CSV como contrato portátil hacia Power BI, sin versionar bases, modelos ni datos generados.
+| Situación | Señal | Respuesta prevista |
+|---|---|---|
+| lote repetido sin cambios | misma huella y `run_id` | omitir la segunda escritura |
+| lote repetido con otro contenido | huella incompatible | detener y revisar el origen |
+| pérdida de un mes | control de continuidad fallido | completar o justificar el período antes de publicar |
+| claves sin dimensión | control referencial fallido | corregir catálogo o regla de asignación |
+| variación abrupta de volumen | indicador de observabilidad | contrastar extracción y calendario comercial |
+| diferencia de ingreso | conciliación fallida | revisar tipo, duplicados y transformación |
 
-## Historia, incrementalidad y observabilidad
+## Decisiones de diseño
 
-`src/advanced_analytics.py` incorpora cortes mensuales configurables y mantiene la identidad servicio-mes. Cada ejecución registra `run_id`, huella del contenido, cantidad de filas y fecha de carga. Repetir un lote idéntico no duplica información; reutilizar su identificador con datos distintos genera un error.
+- El snapshot conserva una fecha explícita para no tratar valores cambiantes como atributos permanentes.
+- La historia servicio-mes se mantiene separada de la vista consolidada para evitar doble conteo.
+- SCD tipo 2 permite explicar con qué ciudad y segmento se atribuyó cada período.
+- La huella del lote protege contra reenvíos y sustituciones accidentales.
+- Los controles se ejecutan en Python y SQL: los primeros detienen temprano; los segundos dejan evidencia junto al modelo.
+- CSV actúa como frontera portátil para BI, mientras DuckDB conserva las relaciones y la lógica dimensional.
+- La clasificación de riesgo del snapshot es descriptiva; no autoriza acciones ni se presenta como predicción.
 
-Las tablas añadidas cubren:
+## Estructura del repositorio
 
-- `dim_customer_scd2`: versiones de ciudad y segmento con vigencia e indicador actual.
-- `fact_service_monthly`: ingreso reconocido, uso, incidentes y estado por servicio y mes.
-- `mart_customer_lifecycle`: altas o reactivaciones, expansión, contracción, estabilidad y bajas.
-- `mart_cohort_retention`: población inicial, clientes retenidos y tasa por edad de cohorte.
-- `data_observability_monthly`: volumen, variación mensual e indicador de conciliación.
+```text
+src/                     carga, validación e historia analítica
+sql/                     modelo dimensional y consultas de contraste
+powerbi/                 especificación del tablero y medidas DAX
+docs/                    arquitectura, diccionario y catálogo KPI
+docs/results/            hallazgos y visualizaciones generadas
+tests/                   pruebas funcionales, históricas y de calidad
+portfolio-site/          sitio público y CV descargable
+.github/workflows/       pruebas y publicación de GitHub Pages
+```
 
-La [arquitectura histórica](docs/architecture_history.md) describe flujo, granos y contratos. Las nuevas salidas CSV están preparadas para páginas de retención, movimiento de ingresos, calidad y seguimiento de cargas en Power BI.
+## Alcance y evolución
 
-## Límites de alcance
+La fuente controlada simplifica facturación, hogares, productos, bajas y eventos operativos. Para conectar fuentes corporativas todavía deben acordarse contratos, zonas horarias, calendario de cierre, tratamiento de hechos tardíos, retención, RLS y responsables de cada indicador.
 
-- La fuente controlada simplifica facturación, hogares, productos, bajas y eventos operativos.
-- El historial valida cambios e incrementalidad, pero no representa un calendario comercial específico.
-- La regla de riesgo requiere calibración y revisión antes de orientar acciones de retención.
-- Gateway, credenciales, RLS y despliegue en Power BI Service dependen del entorno de la organización.
+Las siguientes ampliaciones previstas son:
 
-## Próximos pasos
-
-1. Validar catálogo de KPI, vigencias y conciliaciones con responsables de los datos.
-2. Conectar facturación, campañas y resultados de retención mediante contratos versionados.
-3. Configurar RLS, particiones de actualización y alertas de refresco en Power BI Service.
-4. Incorporar pruebas de recuperación, acuerdos de frescura y trazabilidad del origen.
-
-## Capturas
-
-La imagen superior es una visualización equivalente generada desde el mart. El diseño detallado del dashboard se encuentra en [powerbi/dashboard_spec.md](powerbi/dashboard_spec.md).
+1. incorporar facturación, campañas y resultados de retención mediante contratos versionados;
+2. añadir captura de cambios y particiones de actualización por período;
+3. establecer alertas de frescura, volumen y conciliación con responsables asignados;
+4. configurar seguridad por fila y despliegue gobernado del modelo semántico;
+5. medir resultados de las intervenciones sin confundir asociación con causalidad.
 
 ## Licencia
 
-Código disponible bajo [MIT](LICENSE). Los datos de referencia se utilizan para validación segura, repetible y sin exposición de información confidencial.
+Código disponible bajo [MIT](LICENSE). Los datos incluidos se usan para validación segura sin exposición de información confidencial.

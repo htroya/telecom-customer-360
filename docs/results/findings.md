@@ -1,4 +1,4 @@
-# Hallazgos reproducibles
+# Hallazgos verificables
 
 > Todos los valores proceden del dataset sintético generado por este repositorio; no representan clientes ni resultados de una empresa real.
 
