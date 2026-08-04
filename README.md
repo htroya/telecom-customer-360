@@ -4,6 +4,8 @@ Proyecto de ingeniería analítica para consolidar servicios de telefonía fija,
 
 > **Datos:** toda la información es sintética, determinística y generada localmente. No contiene clientes, operaciones ni métricas de una empresa real.
 
+**Portafolio interactivo:** https://htroya.github.io/telecom-customer-360/
+
 ![Vista ejecutiva equivalente](docs/results/dashboard_preview.svg)
 
 ## Resumen ejecutivo
