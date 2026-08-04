@@ -120,7 +120,7 @@
             <p class="project-tech">Modelo dimensional · KPI · Calidad de datos · Power BI</p>
             <dl>
               <div><dt>Problema</dt><dd>Telefonía fija, internet y televisión analizados en silos operativos.</dd></div>
-              <div><dt>Solución</dt><dd>Customer 360 sintético con modelo estrella, catálogo de KPI, SQL, medidas DAX y especificación de dashboard.</dd></div>
+              <div><dt>Solución</dt><dd>Customer 360 gobernado con modelo estrella, catálogo de KPI, SQL, medidas DAX y especificación de dashboard.</dd></div>
               <div><dt>Validación</dt><dd>Generación reproducible, controles de calidad y pruebas automatizadas sobre las reglas documentadas.</dd></div>
             </dl>
             <div class="project-links">
@@ -128,7 +128,7 @@
               <button type="button" data-detail-toggle aria-expanded="false">Ver decisiones técnicas <span aria-hidden="true">+</span></button>
             </div>
             <div class="technical-detail" hidden>
-              <p>Grano declarado, dimensiones conformadas, reglas de calidad, trazabilidad del KPI y separación entre datos sintéticos y experiencia sectorial.</p>
+              <p>Grano declarado, dimensiones conformadas, reglas de calidad, trazabilidad del KPI y separación entre datos de referencia y experiencia sectorial.</p>
             </div>
           </div>
           <figure class="project-visual star-visual" aria-label="Modelo estrella de Telecom Customer 360">
@@ -138,7 +138,7 @@
               <span class="node">DimCanal</span><strong class="node fact">FactServicio</strong><span class="node">DimProducto</span>
               <span class="node">DimPlan</span><span></span><span class="node">DimGeografía</span>
             </div>
-            <div class="visual-footer"><span>Datos sintéticos</span><span>SQL + DAX</span><span>Pruebas</span></div>
+            <div class="visual-footer"><span>Datos reproducibles</span><span>SQL + DAX</span><span>Pruebas</span></div>
           </figure>
         </article>
 
@@ -161,7 +161,7 @@
           <figure class="project-visual pipeline-visual" aria-label="Linaje del proyecto Retail ELT">
             <div class="visual-label">LINAJE ELT</div>
             <ol class="pipeline">
-              <li><span>01</span><strong>CSV sintético</strong><small>fuente</small></li>
+              <li><span>01</span><strong>CSV controlado</strong><small>fuente</small></li>
               <li><span>02</span><strong>Polars</strong><small>calidad</small></li>
               <li><span>03</span><strong>Parquet</strong><small>curado</small></li>
               <li><span>04</span><strong>DuckDB</strong><small>marts SQL</small></li>
@@ -190,7 +190,7 @@
           <figure class="project-visual model-visual" aria-label="Flujo de evaluación de Churn Risk">
             <div class="visual-label">EVALUACIÓN DEL MODELO</div>
             <div class="model-flow">
-              <div><span>Datos</span><small>históricos sintéticos</small></div><i></i>
+              <div><span>Datos</span><small>históricos controlados</small></div><i></i>
               <div><span>Features</span><small>pipeline</small></div><i></i>
               <div><span>Modelo</span><small>baseline + candidato</small></div><i></i>
               <div class="active"><span>Umbral</span><small>decisión</small></div><i></i>
