@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Currículum ATS de Hernán Troya para posiciones de Analista de Datos y Business Intelligence." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CV | Hernán Troya — Analista de Datos y BI" />
+    <meta property="og:description" content="Experiencia en Power BI, SQL, ETL/ELT, modelado dimensional, Python y arquitectura de soluciones." />
+    <meta property="og:url" content="https://htroya.github.io/telecom-customer-360/cv.html" />
+    <link rel="canonical" href="https://htroya.github.io/telecom-customer-360/cv.html" />
+    <title>CV | Hernán Troya — Analista de Datos y BI</title>
+    <style>
+      :root { color-scheme: dark; --bg:#040d18; --panel:#081729; --line:#29435f; --text:#f4f2ed; --muted:#9bacbf; --accent:#ffb000; }
+      * { box-sizing: border-box; }
+      body { margin:0; min-height:100vh; background:var(--bg); color:var(--text); font-family:"Segoe UI",Arial,sans-serif; }
+      header { display:flex; align-items:center; justify-content:space-between; gap:2rem; min-height:76px; padding:1rem clamp(1.2rem,4vw,4rem); border-bottom:1px solid var(--line); }
+      .identity { display:grid; gap:.15rem; }
+      .identity strong { font-size:1.08rem; }
+      .identity span { color:var(--muted); font-size:.9rem; }
+      nav { display:flex; flex-wrap:wrap; gap:.8rem; }
+      a { color:inherit; text-decoration:none; }
+      .action { display:inline-flex; min-height:44px; align-items:center; padding:.55rem 1rem; border:1px solid var(--accent); font-weight:650; }
+      .primary { background:var(--accent); color:var(--bg); }
+      main { width:min(1500px,100%); margin:auto; padding:clamp(1rem,3vw,2.6rem); }
+      .intro { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2rem; align-items:end; margin-bottom:1.4rem; }
+      h1 { margin:0; max-width:16ch; font-size:clamp(2rem,4vw,4.8rem); line-height:1.02; letter-spacing:-.045em; }
+      .intro p { max-width:38rem; margin:0; color:var(--muted); }
+      .viewer { height:calc(100vh - 260px); min-height:620px; overflow:hidden; border:1px solid var(--line); background:var(--panel); }
+      iframe { width:100%; height:100%; border:0; background:white; }
+      footer { display:flex; justify-content:space-between; gap:1rem; padding:1.2rem clamp(1.2rem,4vw,4rem) 2rem; color:var(--muted); font-size:.85rem; }
+      @media (max-width:760px) {
+        header,.intro,footer { align-items:flex-start; flex-direction:column; }
+        .intro { grid-template-columns:1fr; }
+        .viewer { min-height:70vh; height:70vh; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a class="identity" href="./"><strong>Hernán Troya</strong><span>Analista de Datos y Business Intelligence</span></a>
+      <nav aria-label="Acciones del currículum">
+        <a class="action" href="./">Ver portafolio</a>
+        <a class="action primary" href="CV_Hernan_Troya_Analista_Datos_ATS_2026.pdf" download>Descargar PDF</a>
+      </nav>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="cv-title">
+        <h1 id="cv-title">Currículum de Hernán Troya.</h1>
+        <p>Versión ATS de dos páginas con experiencia, formación, certificaciones, tecnologías y proyectos de datos. El documento puede leerse aquí o descargarse en PDF.</p>
+      </section>
+      <section class="viewer" aria-label="Visor del currículum">
+        <iframe src="CV_Hernan_Troya_Analista_Datos_ATS_2026.pdf#view=FitH" title="Currículum ATS de Hernán Troya">
+          <p><a href="CV_Hernan_Troya_Analista_Datos_ATS_2026.pdf">Abrir currículum en PDF</a></p>
+        </iframe>
+      </section>
+    </main>
+    <footer><span>Quito, Ecuador</span><span>Power BI · SQL · Python · ETL/ELT · AWS</span></footer>
+  </body>
+</html>
